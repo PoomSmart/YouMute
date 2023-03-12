@@ -217,16 +217,17 @@ NSBundle *YouMuteBundle() {
 - (void)layoutSubviews {
     %orig;
     if (!UseBottomMuteButton()) return;
+    CGFloat multiFeedWidth = [self respondsToSelector:@selector(multiFeedElementView)] ? [self multiFeedElementView].frame.size.width : 0;
     YTQTMButton *enter = [self enterFullscreenButton];
     if ([enter yt_isVisible]) {
         CGRect frame = enter.frame;
-        frame.origin.x -= enter.frame.size.width + 16;
+        frame.origin.x -= multiFeedWidth + enter.frame.size.width + 16;
         self.muteButton.frame = frame;
     } else {
         YTQTMButton *exit = [self exitFullscreenButton];
         if ([exit yt_isVisible]) {
             CGRect frame = exit.frame;
-            frame.origin.x -= exit.frame.size.width + 16;
+            frame.origin.x -= multiFeedWidth + exit.frame.size.width + 16;
             self.muteButton.frame = frame;
         }
     }
