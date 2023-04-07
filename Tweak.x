@@ -1,3 +1,4 @@
+#import <rootless.h>
 #import "../YouTubeHeader/YTColor.h"
 #import "../YouTubeHeader/YTCommonUtils.h"
 #import "../YouTubeHeader/YTInlinePlayerBarContainerView.h"
@@ -112,11 +113,8 @@ NSBundle *YouMuteBundle() {
         NSString *tweakBundlePath = [[NSBundle mainBundle] pathForResource:@"YouMute" ofType:@"bundle"];
         if (tweakBundlePath)
             bundle = [NSBundle bundleWithPath:tweakBundlePath];
-        else {
-            bundle = [NSBundle bundleWithPath:@"/Library/Application Support/YouMute.bundle"];
-            if (!bundle)
-                bundle = [NSBundle bundleWithPath:@"/var/jb/Library/Application Support/YouMute.bundle"];
-        }
+        else
+            bundle = [NSBundle bundleWithPath:ROOT_PATH_NS(@"/Library/Application Support/YouMute.bundle")];
     });
     return bundle;
 }
