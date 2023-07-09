@@ -55,6 +55,10 @@ static UIImage *muteImage(BOOL muted) {
     return self;
 }
 
+- (YTQTMButton *)button:(NSString *)tweakId {
+    return [tweakId isEqualToString:TweakKey] ? self.muteButton : %orig;
+}
+
 - (UIImage *)buttonImage:(NSString *)tweakId {
     return [tweakId isEqualToString:TweakKey] ? muteImage(isMutedTop(self)) : %orig;
 }
@@ -81,6 +85,10 @@ static UIImage *muteImage(BOOL muted) {
     self = %orig;
     self.muteButton = [self createButton:TweakKey accessibilityLabel:@"Mute" selector:@selector(didPressMute:)];
     return self;
+}
+
+- (YTQTMButton *)button:(NSString *)tweakId {
+    return [tweakId isEqualToString:TweakKey] ? self.muteButton : %orig;
 }
 
 - (UIImage *)buttonImage:(NSString *)tweakId {
