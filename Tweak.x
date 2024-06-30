@@ -30,7 +30,7 @@ static BOOL isMutedBottom(YTInlinePlayerBarContainerView *self) {
 
 static NSBundle *YTEditResourcesBundle() {
     Class YTCommonUtilsClass = %c(YTCommonUtils);
-    return [YTCommonUtilsClass resourceBundleForModuleName:@"Edit" appBundle:[YTCommonUtilsClass bundleForClass:%c(YTEditBundleIdentifier)]];
+    return [YTCommonUtilsClass resourceBundleForModuleName:@"Edit" appBundle:[NSBundle bundleForClass:%c(YTEditBundleIdentifier)]];
 }
 
 static UIImage *muteImage(BOOL muted) {
