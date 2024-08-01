@@ -1,7 +1,6 @@
 #import "../YTVideoOverlay/Header.h"
 #import "../YTVideoOverlay/Init.x"
 #import <YouTubeHeader/YTColor.h>
-#import <YouTubeHeader/YTCommonUtils.h>
 #import <YouTubeHeader/YTMainAppVideoPlayerOverlayViewController.h>
 #import <YouTubeHeader/YTSingleVideoController.h>
 
@@ -29,8 +28,8 @@ static BOOL isMutedBottom(YTInlinePlayerBarContainerView *self) {
 }
 
 static NSBundle *YTEditResourcesBundle() {
-    Class YTCommonUtilsClass = %c(YTCommonUtils);
-    return [YTCommonUtilsClass resourceBundleForModuleName:@"Edit" appBundle:[NSBundle bundleForClass:%c(YTEditBundleIdentifier)]];
+    NSBundle *editBundle = [NSBundle bundleForClass:%c(YTEditBundleIdentifier)];
+    return [NSBundle bundleWithPath:[[editBundle bundlePath] stringByAppendingPathComponent:@"Edit_Resources.bundle"]];
 }
 
 static UIImage *muteImage(BOOL muted) {
