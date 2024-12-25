@@ -7,12 +7,10 @@
 #define TweakKey @"YouMute"
 
 @interface YTMainAppControlsOverlayView (YouMute)
-@property (retain, nonatomic) YTQTMButton *muteButton;
 - (void)didPressMute:(id)arg;
 @end
 
 @interface YTInlinePlayerBarContainerView (YouMute)
-@property (retain, nonatomic) YTQTMButton *muteButton;
 - (void)didPressMute:(id)arg;
 @end
 
@@ -40,24 +38,6 @@ static UIImage *muteImage(BOOL muted) {
 
 %hook YTMainAppControlsOverlayView
 
-%property (retain, nonatomic) YTQTMButton *muteButton;
-
-- (id)initWithDelegate:(id)delegate {
-    self = %orig;
-    self.muteButton = [self createButton:TweakKey accessibilityLabel:@"Mute" selector:@selector(didPressMute:)];
-    return self;
-}
-
-- (id)initWithDelegate:(id)delegate autoplaySwitchEnabled:(BOOL)autoplaySwitchEnabled {
-    self = %orig;
-    self.muteButton = [self createButton:TweakKey accessibilityLabel:@"Mute" selector:@selector(didPressMute:)];
-    return self;
-}
-
-- (YTQTMButton *)button:(NSString *)tweakId {
-    return [tweakId isEqualToString:TweakKey] ? self.muteButton : %orig;
-}
-
 - (UIImage *)buttonImage:(NSString *)tweakId {
     return [tweakId isEqualToString:TweakKey] ? muteImage(isMutedTop(self)) : %orig;
 }
@@ -67,7 +47,7 @@ static UIImage *muteImage(BOOL muted) {
     YTMainAppVideoPlayerOverlayViewController *c = [self valueForKey:@"_eventsDelegate"];
     YTSingleVideoController *video = [c valueForKey:@"_currentSingleVideoObservable"];
     [video setMuted:![video isMuted]];
-    [self.muteButton setImage:muteImage([video isMuted]) forState:0];
+    [self.overlayButtons[TweakKey] setImage:muteImage([video isMuted]) forState:0];
 }
 
 %end
@@ -78,18 +58,6 @@ static UIImage *muteImage(BOOL muted) {
 
 %hook YTInlinePlayerBarContainerView
 
-%property (retain, nonatomic) YTQTMButton *muteButton;
-
-- (id)init {
-    self = %orig;
-    self.muteButton = [self createButton:TweakKey accessibilityLabel:@"Mute" selector:@selector(didPressMute:)];
-    return self;
-}
-
-- (YTQTMButton *)button:(NSString *)tweakId {
-    return [tweakId isEqualToString:TweakKey] ? self.muteButton : %orig;
-}
-
 - (UIImage *)buttonImage:(NSString *)tweakId {
     return [tweakId isEqualToString:TweakKey] ? muteImage(isMutedBottom(self)) : %orig;
 }
@@ -98,7 +66,7 @@ static UIImage *muteImage(BOOL muted) {
 - (void)didPressMute:(id)arg {
     YTSingleVideoController *video = [self.delegate valueForKey:@"_currentSingleVideo"];
     [video setMuted:![video isMuted]];
-    [self.muteButton setImage:muteImage([video isMuted]) forState:0];
+    [self.overlayButtons[TweakKey] setImage:muteImage([video isMuted]) forState:0];
 }
 
 %end
@@ -106,7 +74,11 @@ static UIImage *muteImage(BOOL muted) {
 %end
 
 %ctor {
-    initYTVideoOverlay(TweakKey);
+    initYTVideoOverlay(TweakKey, @{
+        AccessibilityLabelKey: @"Mute",
+        SelectorKey: @"didPressMute:",
+        UpdateImageOnVisibleKey: @YES
+    });
     %init(Top);
     %init(Bottom);
 }
