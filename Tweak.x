@@ -48,7 +48,7 @@ static UIImage *muteImage(BOOL muted) {
     YTMainAppVideoPlayerOverlayViewController *c = [self valueForKey:@"_eventsDelegate"];
     YTSingleVideoController *video = [c valueForKey:@"_currentSingleVideoObservable"];
     [video setMuted:![video isMuted]];
-    [self.overlayButtons[TweakKey] setImage:muteImage([video isMuted]) forState:0];
+    [self.overlayButtons[TweakKey] setImage:muteImage([video isMuted]) forState:UIControlStateNormal];
 }
 
 %end
@@ -67,7 +67,7 @@ static UIImage *muteImage(BOOL muted) {
 - (void)didPressMute:(id)arg {
     YTSingleVideoController *video = [self.delegate valueForKey:@"_currentSingleVideo"];
     [video setMuted:![video isMuted]];
-    [self.overlayButtons[TweakKey] setImage:muteImage([video isMuted]) forState:0];
+    [self.overlayButtons[TweakKey] setImage:muteImage([video isMuted]) forState:UIControlStateNormal];
 }
 
 %end
