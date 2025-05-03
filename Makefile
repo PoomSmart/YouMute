@@ -9,7 +9,6 @@ else
 		TARGET = iphone:clang:latest:11.0
 	endif
 endif
-PACKAGE_VERSION = 1.3.1
 INSTALL_TARGET_PROCESSES = YouTube
 ARCHS = arm64
 
