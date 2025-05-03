@@ -1,5 +1,5 @@
 # YouMute
-Mute/unmute videos in YouTube directly.
+Mutes/unmutes videos in iOS YouTube faster from the video overlay.
 
 ## Prerequisites
 
