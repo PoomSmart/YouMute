@@ -26,13 +26,8 @@ static BOOL isMutedBottom(YTInlinePlayerBarContainerView *self) {
     return [video isMuted];
 }
 
-static NSBundle *YTEditResourcesBundle() {
-    NSBundle *editBundle = [NSBundle bundleForClass:%c(YTEditBundleIdentifier)];
-    return [NSBundle bundleWithPath:[[editBundle bundlePath] stringByAppendingPathComponent:@"Edit_Resources.bundle"]];
-}
-
 static UIImage *muteImage(BOOL muted) {
-    return [%c(QTMIcon) tintImage:[UIImage imageNamed:muted ? @"ic_volume_off" : @"ic_volume_up" inBundle:YTEditResourcesBundle() compatibleWithTraitCollection:nil] color:[%c(YTColor) white1]];
+    return [%c(QTMIcon) imageWithName:muted ? @"ic_volume_off" : @"ic_volume_up" color:[%c(YTColor) white1]];
 }
 
 %group Top
